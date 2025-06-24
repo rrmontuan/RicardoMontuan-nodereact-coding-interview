@@ -4,6 +4,7 @@ import {
     HttpCode,
     NotFoundError,
     Param,
+    QueryParam,
 } from 'routing-controllers';
 import { PeopleProcessing } from '../services/people_processing.service';
 
@@ -13,8 +14,8 @@ const peopleProcessing = new PeopleProcessing();
 export default class PeopleController {
     @HttpCode(200)
     @Get('/all')
-    getAllPeople() {
-        const people = peopleProcessing.getAll();
+    getAllPeople(@QueryParam("term") term: string) {
+        const people = peopleProcessing.getAll(term);
 
         if (!people) {
             throw new NotFoundError('No people found');
